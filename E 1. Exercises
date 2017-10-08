@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+class Exercises
+{
+    static void Main(string[] args)
+    {
+        string data = Console.ReadLine();
+        List<Exercise> newExercise = new List<Exercise>();
+        while (!data.Contains("go go go"))
+        {
+             newExercise.Add(Exercise.GetData(data));
+            data = Console.ReadLine();
+        }
+        PrintExercise(newExercise);
+    }
+    private static void PrintExercise(List<Exercise> newExercise)
+    {
+        foreach (var item in newExercise)
+        {
+            int counter = 1;
+            Console.WriteLine($"Exercises: {item.Topic}\n" +
+                $"Problems for exercises and homework for the \"{item.CourseName}\" course @ SoftUni.\n" +
+                $"Check your solutions here: {item.JudgeContestLink}");
+            foreach (var prob in item.Problems)
+            {
+                Console.WriteLine($"{counter}. {prob}");
+                counter++;
+            }
+        }
+    }
+    class Exercise
+    {
+        public string  Topic { get; set; }
+        public string CourseName{ get; set; }
+        public string JudgeContestLink { get; set; }
+        public List<string> Problems { get; set; }
+
+        public static Exercise GetData(string data)
+        {
+            List<string> input = data.Split(new string[] {" -> "},StringSplitOptions.RemoveEmptyEntries).ToList();
+               
+            Exercise dataForExercise = new Exercise()
+            {
+                Topic = input[0],
+                CourseName = input[1],
+                JudgeContestLink = input[2],
+                Problems = input[3].Split(new string[] { ", " },
+                StringSplitOptions.RemoveEmptyEntries).ToList(),
+            };
+            return dataForExercise;
+        }
+    }
+}
