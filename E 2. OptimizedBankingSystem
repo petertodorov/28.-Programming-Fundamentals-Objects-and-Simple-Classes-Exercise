@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+class OptimizedBankingSystem
+{
+    static void Main(string[] args)
+    {
+        string data = Console.ReadLine();
+        List<BankAccount> allAccounts = new List<BankAccount>();
+        while (!data.Contains("end"))
+        {
+            allAccounts.Add(BankAccount.GetData(data));
+                data = Console.ReadLine();
+        }
+
+        foreach (var account in allAccounts.OrderByDescending(a => a.Balance).ThenBy(a =>a.Bank.Length))
+        {
+            Console.WriteLine($"{account.Name} -> {account.Balance} ({account.Bank})");
+        }
+
+    }
+    class BankAccount
+    {
+        public string Name { get; set; }
+        public string Bank { get; set; }
+        public decimal Balance { get; set; }
+
+        public static BankAccount GetData(string data)
+        {
+            List<string> tokens = data.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            BankAccount account = new BankAccount()
+            {
+                Bank = tokens[0],
+                Name = tokens[1],
+                Balance = decimal.Parse(tokens[2])
+            };
+         return account;
+        }
+        
+    }
+}
