@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+class Animals
+{
+    public static List<string> toTest = new List<string>();
+    static void Main(string[] args)
+    {
+        string input = Console.ReadLine();
+        List<Cat> myCats = new List<Cat>();
+        List<Dog> myDogs = new List<Dog>();
+        List<Snake> mySnake = new List<Snake>();
+        while (input != "I'm your Huckleberry")
+        {
+            toTest = input.Split(' ').ToList();
+            if (toTest[0] != "talk")
+            {
+                switch (toTest[0])
+                {
+                    case "Cat":
+                        {
+                            myCats.Add(PopulateCat());
+                        }
+                        break;
+                    case "Dog":
+                        {
+                            myDogs.Add(PopulateDog());
+                        }
+                        break;
+                    case "Snake":
+                        {
+                            mySnake.Add(PopulateSnake());
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                foreach (var cat in myCats)
+                {
+                    if (cat.Name == toTest[1])
+                    {
+                        cat.ProduceSound();
+                    }
+                }
+                foreach (var dog in myDogs)
+                {
+                    if (dog.Name == toTest[1])
+                    {
+                        dog.ProduceSound();
+                    }
+                }
+                foreach (var snake in mySnake)
+                {
+                    if (snake.Name == toTest[1])
+                    {
+                        snake.ProduceSound();
+                    }
+                }
+            }
+            input = Console.ReadLine();
+        }
+        foreach (var dog in myDogs)
+        {
+            Console.WriteLine($"Dog: {dog.Name}, Age: {dog.Age}, Number Of Legs: {dog.NumberOfLegs}");
+        }
+        foreach (var cat in myCats)
+        {
+            Console.WriteLine($"Cat: {cat.Name}, Age: {cat.Age}, IQ: {cat.IQ}");
+        }
+        foreach (var snake in mySnake)
+        {
+            Console.WriteLine($"Snake: {snake.Name}, Age: {snake.Age}, Cruelty: {snake.Cruelty}");
+        }
+    }
+    class Cat
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int IQ { get; set; }
+        public void ProduceSound()
+        {
+            Console.WriteLine("I'm an Aristocat, and I will now produce an aristocratic sound! Myau Myau.");
+        }
+    }
+     static Cat PopulateCat()
+    {
+        Cat aCat = new Cat()
+        {
+            Name = toTest[1],
+            Age = int.Parse(toTest[2]),
+            IQ = int.Parse(toTest[3]),
+        };
+        return aCat;
+    }
+    class Dog
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int NumberOfLegs { get; set; }
+        public void ProduceSound()
+        {
+            Console.WriteLine("I'm a Distinguishedog, and I will now produce a distinguished sound! Bau Bau.");
+        }
+    }
+    static Dog PopulateDog()
+    {
+        Dog aDog = new Dog()
+        {
+            Name = toTest[1],
+            Age = int.Parse(toTest[2]),
+            NumberOfLegs = int.Parse(toTest[3])
+        };
+        return aDog;
+    }
+    class Snake
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int Cruelty { get; set; }
+        
+        public void ProduceSound()
+        {
+            Console.WriteLine("I'm a Sophistisnake, and I will now produce a sophisticated sound! Honey, I'm home.");
+        }
+    }
+    static Snake PopulateSnake()
+    {
+        Snake aSnake = new Snake()
+        {
+            Name = toTest[1],
+            Age = int.Parse(toTest[2]),
+            Cruelty = int.Parse(toTest[3])
+        };
+        return aSnake;
+    }
+}
