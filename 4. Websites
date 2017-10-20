@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+class Websites
+{
+    static void Main(string[] args)
+    {
+        string input = Console.ReadLine();
+        while (input != "end")
+        {
+            Website myWebSite = Website.GetInput(input);
+            if (myWebSite.Queries.Count>1)
+            {
+                Console.WriteLine($"https://www.{myWebSite.Host}.{myWebSite.Domain}/query?=[{string.Join("]&[", myWebSite.Queries)}]");
+            }
+            else
+            {
+                Console.WriteLine($"https://www.{myWebSite.Host}.{myWebSite.Domain}");
+            }
+            input = Console.ReadLine();
+        }
+    }
+}
+
+class Website
+{
+    public string Host { get; set; }
+    public string Domain { get; set; }
+    public List<string> Queries { get; set; }
+    public static Website GetInput(string input)
+    {
+        List<string> tokens = input.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        List<string> queryToAdd = tokens.Last().Split(',').ToList();
+        Website newWebsite = new Website()
+        {
+            Host = tokens[0],
+            Domain = tokens[1],
+            Queries = queryToAdd
+        };
+        return newWebsite;
+    }
+}
+
+
